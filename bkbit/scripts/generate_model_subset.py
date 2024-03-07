@@ -1,4 +1,4 @@
-import kbmodel
+import kbmodel20231130 as kbmodel
 import json 
 
 definitions = {
@@ -25,5 +25,5 @@ definitions = {
 }
 
 # Save all JSON schemas to a single file
-with open("kbmodel_gars.json", 'w') as file:
+with open("kbmodel_gars_20231130.json", 'w') as file:
     json.dump(definitions, file, indent=2)
