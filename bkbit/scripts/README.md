@@ -1,38 +1,28 @@
-# gfftranslator.py
+# linkml_trimmer.py
 
-gfftranslator.py is a Python script that generates GeneAnnotation objects from data stored in gff files.  
-
+linkml_trimmer returns a trimmed version of a linkml model. 
 ## Usage
 
 ```python
-from bkbit.scripts.gfftranslator import gff_to_gene_annotation
+# Step 1: import YamlTrimmer
+from bkbit.scripts.linkml_trimmer import YamlTrimmer
 
-# data_dir is the directory path where the input csv file exists
-data_dir = 'bkbit/example-data'
+# Step 2: initialize YamlTrimmer Object with a linkml model 
+trimmed_model = YamlTrimmer(path_to_linkml_model)
 
-# input_fname is the name of the input csv file that contains the gff files
-# Note: example input data can be found under example-data directory (20230808_subset_genome_annotation.csv)
-input_fname = 'XXX.csv'
+# Step 3: define the classes, slots, and enums that should be included in the trimmed model
+classes = [...] # List of classes to keep
+slots = [...] # List of slots to keep
+enums = [...] # List of enums to keep
 
-# genome_assembly_fname is the name of the second input csv files that contains information about the genome assembly metadata
-# Note: example input data can be found under example-data directory (genome_assembly.csv)
-genome_assembly_fname = 'XXX.csv'
+# Step 4: call the trim_model function with the selected classes/slots/enums 
+# Note: only classes is a required parameter. slots and enums are optional 
+trimmed_model.trim_model(classes, slots, enums)
 
-
-# output_dir is the directory path where all of the generated output files will be saved 
-# Note: if output_dir does not exist, gff_to_gene_annotation will create the directory
-output_dir = 'XXX/XXX/'
-
-
-gff_to_gene_annotation(input_fname, data_dir, output_dir, genome_assembly_fname)
-
+# Step 5: call the serialize function to produce trimmed linkml model 
+trimmed_model.serialize()
 ```
 
 ## Notes
 
-1. GFF Input File  
-a. Each row in the csv file contains a url to the .gff file as well as additional attributes to describe the dataset. The csv file must contain the following columns: authority, label, taxon_local_unique_identifier, version, gene_identifier_prefix, url. 
-2. Genome Assembly Input File  
-a. Each row in the csv file represents a genome assembly. The csv file must contain the following columns: identifier_prefix, local_unique_identifier, taxon_identifier_prefix, taxon_local_unique_identifier, version, strain, label
-3. Generated files  
-a. For each .gff file 3 files will be generated: (i) The raw data downloaded from the url provided will be saved as a csv file in the 'data_dir' directory provided. (ii) The parsed and cleaned data will be saved as a csv file in the 'output_dir' directory provided. (iii) The initialized GeneAnnotation objects will be saved as a list of json dictionaries in a json file in the 'output_dir' directory provided. 
+1. To produce bican_biolink.yaml call trim_model with classes = ['gene', 'genome', 'organism taxon', 'thing with taxon', 'material sample', 'procedure', 'entity', 'activity', 'named thing']
