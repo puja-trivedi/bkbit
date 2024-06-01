@@ -12,22 +12,7 @@ from collections import defaultdict
 import subprocess
 import gzip
 from tqdm import tqdm
-from bkbit.models import kbmodel
-#from mappings import *
-
-## CONSTANTS ##
-
-TAXON_SCIENTIFIC_NAME = {'9606': 'Homo sapiens', '10090': 'Mus musculus', '9544': 'Macaca mulatta', '9483': 'Callithrix jacchus'}
-TAXON_COMMON_NAME = {'9606': 'human', '10090': 'mouse', '9544': 'rhesus macaque', '9483': 'common marmoset'}
-PREFIX_MAP = {"NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_", "NCBIGene": "http://identifiers.org/ncbigene/", "ENSEMBL": "http://identifiers.org/ensembl/", "NCBIAssembly": "https://www.ncbi.nlm.nih.gov/assembly/"}
-GENOME_ANNOTATION_FILE_COLUMN_NAMES = {'assembly_identifier_prefix', 'assembly_local_unique_identifier', 'label', 'taxon_identifier_prefix', 'taxon_local_unique_identifier', 'authority', 'version', 'gene_identifier_prefix', 'description', 'url'}
-GENOME_ASSEMBLY_FILE_COLUMN_NAMES = {'identifier_prefix','local_unique_identifier','taxon_identifier_prefix','taxon_local_unique_identifier','version','strain','label'}
-GFF3_FILE_COLUMN_NAMES = ['seqid','source','type','start','end','score','strand','phase','attributes']
-NCBI_GENE_ID_PREFIX = 'NCBIGene'
-ENSEMBL_GENE_ID_PREFIX = 'ENSEMBL'
-TAXON_PREFIX = 'NCBITaxon'
-ASSEMBLY_PREFIX = "NCBIAssembly"
-BICAN_ANNOTATION_PREFIX = 'bican:annotation-'
+from bkbit.models import genome_annotation as ga
 
 
 logging.basicConfig(
@@ -47,6 +32,19 @@ TAXON_SCIENTIFIC_NAME = {
     "9544": "Macaca mulatta",
     "9483": "Callithrix jacchus",
     "60711": "Chlorocebus sabaeus",
+    "9361": "Dasypus novemcinctus",
+    "9685": "Felis catus",
+    "9669": "Mustela putorius furo",
+    "30611": "Otolemur garnettii",
+    "9593": "Gorilla gorilla",
+    "13616": "Monodelphis domestica",
+    "9823": "Sus scrofa",
+    "9986": "Oryctolagus cuniculus",
+    "10116": "Rattus norvegicus",
+    "27679": "Saimiri boliviensis",
+    "246437": "Tupaia belangeri chinensis",
+    "9407": "Rousettus aegyptiacus",
+    "9598": "Pan troglodytes"
 }
 TAXON_COMMON_NAME = {
     "9606": "human",
@@ -54,6 +52,19 @@ TAXON_COMMON_NAME = {
     "9544": "rhesus macaque",
     "9483": "common marmoset",
     "60711": "green monkey",
+    "9361": "nine-banded armadillo",
+    "9685": "cat",
+    "9669": "ferret",
+    "30611": "galago",
+    "9593": "gorilla",
+    "13616":"gray short-tailed opossum",
+    "9823": "pig",
+    "9986": "rabbit",
+    "10116": "rat",
+    "27679": "squirrel monkey",
+    "246437": "Chinese tree shrew",
+    "9407": "egyptian fruit bat",
+    "9598": "chimpanzee"
 }
 PREFIX_MAP = {
     "NCBITaxon": "http://purl.obolibrary.org/obo/NCBITaxon_",
@@ -145,10 +156,10 @@ class Gff3:
             taxon_id (str): The taxon ID of the organism.
 
         Returns:
-            kbmodel.OrganismTaxon: The generated organism taxon object.
+            ga.OrganismTaxon: The generated organism taxon object.
         """
         self.logger.debug("Generating organism taxon")
-        return kbmodel.OrganismTaxon(
+        return ga.OrganismTaxon(
             id=TAXON_PREFIX + ":" + taxon_id,
             full_name=TAXON_SCIENTIFIC_NAME[taxon_id],
             name=TAXON_COMMON_NAME[taxon_id],
@@ -163,16 +174,16 @@ class Gff3:
             authority (str): The authority string to be assigned.
 
         Returns:
-            kbmodel.AuthorityType: The corresponding authority type.
+            ga.AuthorityType: The corresponding authority type.
 
         Raises:
             Exception: If the authority is not supported. Only NCBI and Ensembl authorities are supported.
         """
         self.logger.debug("Assigning authority type")
-        if authority.upper() == kbmodel.AuthorityType.NCBI.value:
-            return kbmodel.AuthorityType.NCBI
-        if authority.upper() == kbmodel.AuthorityType.ENSEMBL.value:
-            return kbmodel.AuthorityType.ENSEMBL
+        if authority.upper() == ga.AuthorityType.NCBI.value:
+            return ga.AuthorityType.NCBI
+        if authority.upper() == ga.AuthorityType.ENSEMBL.value:
+            return ga.AuthorityType.ENSEMBL
         logger.critical(
             "Authority %s is not supported. Please use NCBI or Ensembl.", authority
         )
@@ -197,10 +208,10 @@ class Gff3:
         assembly_strain (str, optional): The strain of the assembly. Defaults to None.
 
         Returns:
-        kbmodel.GenomeAssembly: The generated genome assembly object.
+        ga.GenomeAssembly: The generated genome assembly object.
         """
         self.logger.debug("Generating genome assembly")
-        return kbmodel.GenomeAssembly(
+        return ga.GenomeAssembly(
             id=ASSEMBLY_PREFIX + ":" + assembly_id,
             in_taxon=[self.organism_taxon.id],
             in_taxon_label=self.organism_taxon.full_name,
@@ -218,10 +229,10 @@ class Gff3:
             genome_version (str): The version of the genome.
 
         Returns:
-            kbmodel.GenomeAnnotation: The generated genome annotation.
+            ga.GenomeAnnotation: The generated genome annotation.
         """
         self.logger.debug("Generating genome annotation")
-        return kbmodel.GenomeAnnotation(
+        return ga.GenomeAnnotation(
             id=BICAN_ANNOTATION_PREFIX + genome_label.upper(),
             digest=[checksum.id for checksum in self.checksums],
             content_url=[self.content_url],
@@ -240,7 +251,7 @@ class Gff3:
     def generate_digest(
         self,
         hash_functions: tuple[str] = DEFAULT_HASH,
-    ) -> list[kbmodel.Checksum]:
+    ) -> list[ga.Checksum]:
         """
         Generates checksum digests for the GFF file using the specified hash functions.
 
@@ -248,7 +259,7 @@ class Gff3:
             hash_functions (list[str]): A list of hash functions to use for generating the digests.
 
         Returns:
-            list[kbmodel.Checksum]: A list of Checksum objects containing the generated digests.
+            list[ga.Checksum]: A list of Checksum objects containing the generated digests.
 
         Raises:
             ValueError: If an unsupported hash algorithm is provided.
@@ -270,24 +281,24 @@ class Gff3:
             if hash_type == "SHA256":
                 digest = hashlib.sha256(gff_data).hexdigest()
                 checksums.append(
-                    kbmodel.Checksum(
+                    ga.Checksum(
                         id=urn,
-                        checksum_algorithm=kbmodel.DigestType.SHA256,
+                        checksum_algorithm=ga.DigestType.SHA256,
                         value=digest,
                     )
                 )
             elif hash_type == "MD5":
                 digest = hashlib.md5(gff_data).hexdigest()
                 checksums.append(
-                    kbmodel.Checksum(
-                        id=urn, checksum_algorithm=kbmodel.DigestType.MD5, value=digest
+                    ga.Checksum(
+                        id=urn, checksum_algorithm=ga.DigestType.MD5, value=digest
                     )
                 )
             elif hash_type == "SHA1":
                 digest = hashlib.sha1(gff_data).hexdigest()
                 checksums.append(
-                    kbmodel.Checksum(
-                        id=urn, checksum_algorithm=kbmodel.DigestType.SHA1, value=digest
+                    ga.Checksum(
+                        id=urn, checksum_algorithm=ga.DigestType.SHA1, value=digest
                     )
                 )
             else:
@@ -378,7 +389,7 @@ class Gff3:
                         # TODO: Write cleaner code that calls respective generate function based on the authority automatically
                         if (
                             self.genome_annotation.authority
-                            == kbmodel.AuthorityType.ENSEMBL
+                            == ga.AuthorityType.ENSEMBL
                         ):
                             gene_annotation = self.generate_ensembl_gene_annotation(
                                 attributes, curr_line_num
@@ -387,7 +398,7 @@ class Gff3:
                                 self.gene_annotations[gene_annotation] = gene_annotation
                         elif (
                             self.genome_annotation.authority
-                            == kbmodel.AuthorityType.NCBI
+                            == ga.AuthorityType.NCBI
                         ):
                             gene_annotation = self.generate_ncbi_gene_annotation(
                                 attributes, curr_line_num
@@ -429,7 +440,7 @@ class Gff3:
         # Check and validate the biotype attribute
         biotype = self.__get_attribute(attributes, "biotype", curr_line_num)
 
-        gene_annotation = kbmodel.GeneAnnotation(
+        gene_annotation = ga.GeneAnnotation(
             id=ENSEMBL_GENE_ID_PREFIX + ":" + stable_id,
             source_id=stable_id,
             symbol=name,
@@ -507,7 +518,7 @@ class Gff3:
                 curr_line_num,
             )
 
-        gene_annotation = kbmodel.GeneAnnotation(
+        gene_annotation = ga.GeneAnnotation(
             id=NCBI_GENE_ID_PREFIX + ":" + stable_id,
             source_id=stable_id,
             symbol=name,
@@ -620,13 +631,13 @@ class Gff3:
         ):
             return None
         if (
-            existing_gene_annotation.molecular_type == kbmodel.BioType.noncoding.value
-            and new_gene_annotation.molecular_type != kbmodel.BioType.noncoding.value
+            existing_gene_annotation.molecular_type == ga.BioType.noncoding.value
+            and new_gene_annotation.molecular_type != ga.BioType.noncoding.value
         ):
             return new_gene_annotation
         if (
-            existing_gene_annotation.molecular_type != kbmodel.BioType.noncoding.value
-            and new_gene_annotation.molecular_type == kbmodel.BioType.noncoding.value
+            existing_gene_annotation.molecular_type != ga.BioType.noncoding.value
+            and new_gene_annotation.molecular_type == ga.BioType.noncoding.value
         ):
             return None
         logger.critical(
@@ -693,7 +704,7 @@ class Gff3:
                 )
 
             output_data = {
-                "@context": "https://raw.githubusercontent.com/atlaskb/models/main/jsonld-context-autogen/kbmodel.context.jsonld",
+                "@context": "https://raw.githubusercontent.com/brain-bican/models/main/jsonld-context-autogen/genome_annotation.context.jsonld",
                 "@graph": data,
             }
             f.write(json.dumps(output_data, indent=2))
