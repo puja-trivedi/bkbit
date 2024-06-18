@@ -1,8 +1,18 @@
 from collections import defaultdict
 import csv
 import json
+import logging
+from datetime import datetime
 import requests
 from bkbit.models import library_generation as lg
+
+logging.basicConfig(
+    filename="library_generation_translator_" + datetime.now().strftime("%Y-%m-%d_%H:%M:%S") + ".log",
+    format="%(levelname)s: %(message)s (%(asctime)s)",
+    datefmt="%m/%d/%Y %I:%M:%S %p",
+    level=logging.INFO,
+)
+logger = logging.getLogger(__name__)
 
 BICAN_TO_NIMP_FILE_PATH = "../utils/bican_to_nimp_slots.csv"
 API_URL_PREFIX = "https://brain-specimenportal.org/api/v1/nhash_ids/"
@@ -23,6 +33,7 @@ CATEGORY_TO_CLASS = {
     "specimendissectedroi": lg.DissectionRoiPolygon,
     "slab": lg.BrainSlab,
 }
+NIMP_NO_DATA_FOUND = {'error': 'No data found'}
 
 
 class SpecimenPortal:
@@ -72,6 +83,7 @@ class SpecimenPortal:
     ) = create_bican_to_nimp_mapping(BICAN_TO_NIMP_FILE_PATH)
 
     def __init__(self, jwt_token):
+        self.logger = logger
         self.jwt_token = jwt_token
         self.generated_objects = {}
 
@@ -100,6 +112,7 @@ class SpecimenPortal:
         if response.status_code == 200:
             return response.json()
 
+        logger.critical("Error getting data for NHash ID = {nhash_id}. Status Code: {response.status_code}")
         raise requests.exceptions.HTTPError(
             f"Error getting data for NHash ID = {nhash_id}. Status Code: {response.status_code}"
         )
@@ -131,7 +144,8 @@ class SpecimenPortal:
         )
         if response.status_code == 200:
             return response.json()
-
+        
+        logger.critical("Error getting ancestors for NHash ID = {nhash_id}. Status Code: {response.status_code}")
         raise requests.exceptions.HTTPError(
             f"Error getting data for NHash ID = {nhash_id}. Status Code: {response.status_code}"
         )
@@ -265,18 +279,28 @@ class SpecimenPortal:
         return None
 
     def parse_nhash_id(self, nhash_id):
-        ancestor_tree = SpecimenPortal.get_ancestors(nhash_id, self.jwt_token).get(
-            "data"
-        )
+        nimp_ancestor_pull = SpecimenPortal.get_ancestors(nhash_id, self.jwt_token)
+        #TODO: maybe in the future we can still add the object related to the nhash_id even if there is no ancestor data
+        if 'data'not in nimp_ancestor_pull:
+            logger.critical("No ancestor data found for NHash ID = %s", nhash_id)
+            return
+
+        # if nimp_ancestor_pull == NIMP_NO_DATA_FOUND:
+        #     logger.critical("No ancestor data found for NHash ID = %s", nhash_id)
+        #     ancestor_data = None
+        
+        ancestor_data = nimp_ancestor_pull.get("data")
         stack = [nhash_id]
         while stack:
             current_nhash_id = stack.pop()
             if current_nhash_id not in self.generated_objects:
+                nimp_data_pull = SpecimenPortal.get_data(current_nhash_id, self.jwt_token)
+                if 'data' not in nimp_data_pull:
+                    logger.critical("No data found for NHash ID = %s", current_nhash_id)
+                    return
+                data = nimp_data_pull.get("data")
                 parents = (
-                    ancestor_tree.get(current_nhash_id).get("edges").get("has_parent")
-                )
-                data = SpecimenPortal.get_data(current_nhash_id, self.jwt_token).get(
-                    "data"
+                    ancestor_data.get(current_nhash_id).get("edges").get("has_parent")
                 )
                 bican_object = self.generate_bican_object(data, parents)
                 if bican_object is not None:
