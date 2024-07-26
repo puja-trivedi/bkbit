@@ -27,3 +27,11 @@ jobs:
       
       - name: Run add_dunderMethods_genomeAnnotation
         run: python bkbit/model_editors/add_dunderMethods_genomeAnnotation.py
+
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add bkbit/models/genome_annotation.py
+          git commit -m 'Update genome_annotation.py with dunder methods'
+          git push
