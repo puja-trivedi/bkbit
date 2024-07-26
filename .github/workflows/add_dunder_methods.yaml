@@ -27,4 +27,4 @@ jobs:
           # For example: pip install -r requirements.txt
       
       - name: Run add_dunderMethods_genomeAnnotation
-        run: python scripts/add_dunderMethods_genomeAnnotation.py
+        run: python model_editors/add_dunderMethods_genomeAnnotation.py
