@@ -1,7 +1,7 @@
 import re
 
 # Read the file
-file_path = "../models/genome_annotation.py"
+file_path = "bkbit/models/genome_annotation.py"
 with open(file_path, "r") as file:
     content = file.read()
 
