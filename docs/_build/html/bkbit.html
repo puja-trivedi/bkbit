@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bkbit package &mdash; bkbit  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            bkbit
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">bkbit package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#bkbit-cli-module">bkbit.cli module</a></li>
+<li><a class="reference internal" href="#module-bkbit.parse_gff">bkbit.parse_gff module</a><ul>
+<li><a class="reference internal" href="#bkbit.parse_gff.parse"><code class="docutils literal notranslate"><span class="pre">parse()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-bkbit">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">bkbit</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">bkbit package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/bkbit.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bkbit-package">
+<h1>bkbit package<a class="headerlink" href="#bkbit-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="bkbit.data_translators.html">bkbit.data_translators package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.data_translators.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.data_translators.html#bkbit-data-translators-anatomical-structure-translator-module">bkbit.data_translators.anatomical_structure_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.data_translators.html#bkbit-data-translators-file-manifest-translator-module">bkbit.data_translators.file_manifest_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.data_translators.html#bkbit-data-translators-genome-annotation-translator-module">bkbit.data_translators.genome_annotation_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.data_translators.html#bkbit-data-translators-library-generation-translator-module">bkbit.data_translators.library_generation_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.data_translators.html#module-bkbit.data_translators">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bkbit.model_converters.html">bkbit.model_converters package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_converters.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_converters.html#bkbit-model-converters-sheets-converter-module">bkbit.model_converters.sheets_converter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_converters.html#bkbit-model-converters-yaml2sheet-converter-module">bkbit.model_converters.yaml2sheet_converter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_converters.html#module-bkbit.model_converters">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bkbit.model_editors.html">bkbit.model_editors package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_editors.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_editors.html#bkbit-model-editors-add-dundermethods-genomeannotation-module">bkbit.model_editors.add_dunderMethods_genomeAnnotation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_editors.html#bkbit-model-editors-linkml-trimmer-module">bkbit.model_editors.linkml_trimmer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.model_editors.html#module-bkbit.model_editors">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bkbit.models.html">bkbit.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-1130-kbmodel-module">bkbit.models.1130_kbmodel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-20240124-kbmodel-module">bkbit.models.20240124_kbmodel module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-anatomical-structure-module">bkbit.models.anatomical_structure module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-generate-model-subset-module">bkbit.models.generate_model_subset module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-genome-annotation-module">bkbit.models.genome_annotation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-genome-annotation-dunder-module">bkbit.models.genome_annotation_dunder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-kbmodel20231130-module">bkbit.models.kbmodel20231130 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-kbmodel220231002-module">bkbit.models.kbmodel220231002 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-kbmodelv1-module">bkbit.models.kbmodelv1 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-library-generation-module">bkbit.models.library_generation module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-purple-boxes-module">bkbit.models.purple_boxes module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-purple-boxes-entire-biolink-module">bkbit.models.purple_boxes_entire_biolink module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#bkbit-models-purple-boxes-metadata-module">bkbit.models.purple_boxes_metadata module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.models.html#module-bkbit.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bkbit.tests.html">bkbit.tests package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.tests.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.tests.html#bkbit-tests-test-ga-translator-ensembl-module">bkbit.tests.test_ga_translator_ensembl module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.tests.html#bkbit-tests-test-ga-translator-ncbi-module">bkbit.tests.test_ga_translator_ncbi module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.tests.html#bkbit-tests-test-specimen-portal-translator-module">bkbit.tests.test_specimen_portal_translator module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.tests.html#module-bkbit.tests">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bkbit.utils.html">bkbit.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#bkbit-utils-get-ncbi-taxonomy-module">bkbit.utils.get_ncbi_taxonomy module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#bkbit-utils-gfftranslator-complex-module">bkbit.utils.gfftranslator_complex module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#module-bkbit.utils.load_json">bkbit.utils.load_json module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.load_json.load_json"><code class="docutils literal notranslate"><span class="pre">load_json()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#module-bkbit.utils.nimp_api_endpoints">bkbit.utils.nimp_api_endpoints module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.nimp_api_endpoints.get_ancestors"><code class="docutils literal notranslate"><span class="pre">get_ancestors()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.nimp_api_endpoints.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.nimp_api_endpoints.get_descendants"><code class="docutils literal notranslate"><span class="pre">get_descendants()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.nimp_api_endpoints.get_donor"><code class="docutils literal notranslate"><span class="pre">get_donor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#module-bkbit.utils.setup_logger">bkbit.utils.setup_logger module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.setup_logger.LOG_LEVELS"><code class="docutils literal notranslate"><span class="pre">LOG_LEVELS</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="bkbit.utils.html#bkbit.utils.setup_logger.setup_logger"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="bkbit.utils.html#module-bkbit.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="bkbit-cli-module">
+<h2>bkbit.cli module<a class="headerlink" href="#bkbit-cli-module" title="Link to this heading"></a></h2>
+</section>
+<section id="module-bkbit.parse_gff">
+<span id="bkbit-parse-gff-module"></span><h2>bkbit.parse_gff module<a class="headerlink" href="#module-bkbit.parse_gff" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="bkbit.parse_gff.parse">
+<span class="sig-prename descclassname"><span class="pre">bkbit.parse_gff.</span></span><span class="sig-name descname"><span class="pre">parse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gff_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">strict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/bkbit/parse_gff.html#parse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#bkbit.parse_gff.parse" title="Link to this definition"></a></dt>
+<dd><p>Parse the gff file into the following data structures:</p>
+<ul>
+<li><dl>
+<dt>lines(list of line_data(dict))</dt><dd><ul class="simple">
+<li><p>line_index(int): the index in lines</p></li>
+<li><p>line_raw(str)</p></li>
+<li><p>line_type(str in [‘feature’, ‘directive’, ‘comment’, ‘blank’, ‘unknown’])</p></li>
+<li><p>line_errors(list of str): a list of error messages</p></li>
+<li><p>line_status(str in [‘normal’, ‘modified’, ‘removed’])</p></li>
+<li><p>parents(list of feature(list of line_data(dict))): may have multiple parents</p></li>
+<li><p>children(list of line_data(dict))</p></li>
+<li><p>extra fields depending on line_type</p></li>
+</ul>
+<ul class="simple">
+<li><dl class="simple">
+<dt>directive</dt><dd><ul>
+<li><p>directive(str in [‘##gff-version’, ‘##sequence-region’, ‘##feature-ontology’, ‘##attribute-ontology’, ‘##source-ontology’, ‘##species’, ‘##genome-build’, ‘###’, ‘##FASTA’])</p></li>
+<li><p>extra fields depending on directive</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>feature</dt><dd><ul>
+<li><p>seqid(str): must escape any characters not in the set [a-zA-Z0-9.:<a class="reference external" href="mailto:^*$&#37;&#52;&#48;!+_">^*$<span>&#64;</span>!+_</a>?-<a href="#id1"><span class="problematic" id="id2">|</span></a>] using RFC 3986 Percent-Encoding</p></li>
+<li><p>source(str)</p></li>
+<li><p>type(str in so_types)</p></li>
+<li><p>start(int)</p></li>
+<li><p>end(int)</p></li>
+<li><p>score(float)</p></li>
+<li><p>strand(str in [‘+’, ‘-’, ‘.’, ‘?’])</p></li>
+<li><p>phase(int in [0, 1, 2])</p></li>
+<li><dl class="simple">
+<dt>attributes(dict of tag(str) to value)</dt><dd><ul>
+<li><p>ID(str)</p></li>
+<li><p>Name(str)</p></li>
+<li><p>Alias(list of str): multi value</p></li>
+<li><p>Parent(list of str): multi value</p></li>
+<li><dl class="simple">
+<dt>Target(dict)</dt><dd><ul>
+<li><p>target_id(str)</p></li>
+<li><p>start(int)</p></li>
+<li><p>end(int)</p></li>
+<li><p>strand(str in [‘+’, ‘-’, ‘’])</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>Gap(str): CIGAR format</p></li>
+<li><p>Derives_from(str)</p></li>
+<li><p>Note(list of str): multi value</p></li>
+<li><p>Dbxref(list of str): multi value</p></li>
+<li><p>Ontology_term(list of str): multi value</p></li>
+<li><p>Is_circular(str in [‘true’])</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>fasta_dict(dict of id(str) to sequence_item(dict))</dt><dd><ul>
+<li><p>id(str)</p></li>
+<li><p>header(str)</p></li>
+<li><p>seq(str)</p></li>
+<li><p>line_length(int)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p>features(dict of feature_id(str in line_data[‘attributes’][‘ID’]) to feature(list of line_data(dict)))</p></li>
+</ul>
+<p>A feature is a list of line_data(dict), since all lines that share an ID collectively represent a single feature.</p>
+<p>During serialization, line_data(dict) references should be converted into line_index(int)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gff_file</strong> – a string path or file object</p></li>
+<li><p><strong>strict</strong> – when true, throw exception on syntax and format errors. when false, use best effort to finish parsing while logging errors</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-bkbit">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-bkbit" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, BICAN.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
